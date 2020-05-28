@@ -16,6 +16,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import InputMask from "react-input-mask";
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarEmployee";
 
@@ -50,6 +51,7 @@ class ExpensesList extends Component {
       title: "",
       sex: "",
       maritalStatus: "",
+      phone: "",
     };
   }
 
@@ -75,6 +77,7 @@ class ExpensesList extends Component {
           title: items[item].title,
           sex: items[item].sex,
           maritalStatus: items[item].maritalStatus,
+          phone: items[item].phone,
         });
       }
 
@@ -123,6 +126,7 @@ class ExpensesList extends Component {
         title: snapshot.child("title").val(),
         sex: snapshot.child("sex").val(),
         maritalStatus: snapshot.child("maritalStatus").val(),
+        phone: snapshot.child("phone").val(),
       });
     });
     console.log(
@@ -136,10 +140,11 @@ class ExpensesList extends Component {
     // get our form data out of state
     const employee = {
       firstname: this.toTitleCase(this.state.firstname),
-      lastname: this.removeCommas(this.state.lastname),
+      lastname: this.toTitleCase(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
+      phone: this.state.phone,
     };
 
     //Update expense module
@@ -191,6 +196,13 @@ class ExpensesList extends Component {
       },
       {
         name: "Marital Status",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Phone",
         options: {
           filter: false,
           sort: false,
@@ -268,6 +280,13 @@ class ExpensesList extends Component {
                   }}
                 >
                   {e.maritalStatus}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.phone}
                 </div>,
 
                 <IconButton
@@ -402,6 +421,25 @@ class ExpensesList extends Component {
                           </MenuItem>
                         ))}
                       </TextField>
+                    </Grid>
+                    <Grid item lg={6} sm={6}>
+                      <InputMask
+                        required
+                        mask="256999999999"
+                        value={this.state.phone}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="phone"
+                            name="phone"
+                            label="Phone"
+                            fullWidth
+                            helperText="For example: 772 123 456"
+                            autoComplete="phone"
+                          />
+                        )}
+                      </InputMask>
                     </Grid>
 
                     <Grid item xs={12} sm={12}>

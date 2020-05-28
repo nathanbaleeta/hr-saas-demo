@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputMask from "react-input-mask";
 
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
@@ -32,6 +33,7 @@ class ExpenseForm extends Component {
       title: "",
       sex: "",
       maritalStatus: "",
+      phone: "",
     };
   }
 
@@ -64,6 +66,7 @@ class ExpenseForm extends Component {
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
+      phone: this.state.phone,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi",
       }),
@@ -82,12 +85,20 @@ class ExpenseForm extends Component {
       title: "",
       sex: "",
       maritalStatus: "",
+      phone: "",
     });
   };
 
   render() {
     const { classes } = this.props;
-    const { firstname, lastname, title, sex, maritalStatus } = this.state;
+    const {
+      firstname,
+      lastname,
+      title,
+      sex,
+      maritalStatus,
+      phone,
+    } = this.state;
 
     return (
       <div className={classes.root}>
@@ -194,6 +205,25 @@ class ExpenseForm extends Component {
                   </MenuItem>
                 ))}
               </TextField>
+            </Grid>
+            <Grid item lg={6} sm={6}>
+              <InputMask
+                required
+                mask="256999999999"
+                value={phone}
+                onChange={this.onChange}
+              >
+                {() => (
+                  <TextField
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    fullWidth
+                    helperText="For example: 772 123 456"
+                    autoComplete="phone"
+                  />
+                )}
+              </InputMask>
             </Grid>
 
             <Grid item xs={12} sm={12}>
