@@ -58,15 +58,11 @@ class CustomToolbar extends Component {
         >
           <DialogTitle id="simple-dialog-title" color="primary">
             <Typography component="h1" variant="h5" align="center">
-              Add Expense
+              Add Employee
             </Typography>
           </DialogTitle>
-          <DialogContent
-            style={{
-              zoom: "70%",
-            }}
-          >
-            <Route path="/expenses" component={EmployeeForm} />
+          <DialogContent>
+            <Route path="/cv-bank" component={EmployeeForm} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

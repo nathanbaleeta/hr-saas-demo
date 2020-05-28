@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
 import { Typography } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -18,10 +19,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarEmployee";
 
-import NumberFormat from "react-number-format";
+import { titles } from "../common/titleList";
+import { genders } from "../common/genderList";
+import { maritalStatuses } from "../common/maritalStatusList";
 
 import firebase from "../config/firebase";
-import numeral from "numeral";
 
 const styles = (theme) => ({
   root: {
@@ -43,9 +45,11 @@ class ExpensesList extends Component {
       open: false,
 
       key: "",
-      description: "",
-      amount: "",
-      expenseDate: "",
+      firstname: "",
+      lastname: "",
+      title: "",
+      sex: "",
+      maritalStatus: "",
     };
   }
 
@@ -58,17 +62,19 @@ class ExpensesList extends Component {
   };
 
   componentDidMount() {
-    const expensesRef = firebase.database().ref("employee");
+    const employeeRef = firebase.database().ref("employee");
 
-    expensesRef.on("value", (snapshot) => {
+    employeeRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          description: items[item].description,
-          amount: items[item].amount,
-          expenseDate: items[item].expenseDate,
+          firstname: items[item].firstname,
+          lastname: items[item].lastname,
+          title: items[item].title,
+          sex: items[item].sex,
+          maritalStatus: items[item].maritalStatus,
         });
       }
 
@@ -91,11 +97,6 @@ class ExpensesList extends Component {
   };
 
   onChange = (e) => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -107,19 +108,21 @@ class ExpensesList extends Component {
       .join(" ");
   };
 
-  updateExpense(id) {
+  updateEmployee(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
     //console.log(recordToEdit);
     this.openDialog();
 
     const key = id;
-    const expensesRef = firebase.database().ref(`expenses/${key}`);
-    expensesRef.on("value", (snapshot) => {
+    const employeeRef = firebase.database().ref(`employee/${key}`);
+    employeeRef.on("value", (snapshot) => {
       this.setState({
         key: snapshot.key,
-        description: snapshot.child("description").val(),
-        amount: snapshot.child("amount").val(),
-        expenseDate: snapshot.child("expenseDate").val(),
+        firstname: snapshot.child("firstname").val(),
+        lastname: snapshot.child("lastname").val(),
+        title: snapshot.child("title").val(),
+        sex: snapshot.child("sex").val(),
+        maritalStatus: snapshot.child("maritalStatus").val(),
       });
     });
     console.log(
@@ -131,17 +134,19 @@ class ExpensesList extends Component {
     event.preventDefault();
 
     // get our form data out of state
-    const expense = {
-      description: this.toTitleCase(this.state.description),
-      amount: this.removeCommas(this.state.amount),
-      expenseDate: this.state.expenseDate,
+    const employee = {
+      firstname: this.toTitleCase(this.state.firstname),
+      lastname: this.removeCommas(this.state.lastname),
+      title: this.state.title,
+      sex: this.state.sex,
+      maritalStatus: this.state.maritalStatus,
     };
 
     //Update expense module
     const key = this.state.key;
-    const expensesRef = firebase.database().ref(`expenses/${key}`);
-    expensesRef
-      .update(expense)
+    const employeeRef = firebase.database().ref(`employee/${key}`);
+    employeeRef
+      .update(employee)
       .then(function () {
         console.log("Synchronization succeeded");
       })
@@ -156,7 +161,7 @@ class ExpensesList extends Component {
 
     const columns = [
       {
-        name: "Particulars",
+        name: "Firstname",
         options: {
           filter: false,
           sort: true,
@@ -164,14 +169,28 @@ class ExpensesList extends Component {
       },
 
       {
-        name: "Amount",
+        name: "Lastname",
         options: {
           filter: false,
           sort: false,
         },
       },
       {
-        name: "Date",
+        name: "Title",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Gender",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Marital Status",
         options: {
           filter: false,
           sort: false,
@@ -204,7 +223,7 @@ class ExpensesList extends Component {
         console.log(id);
 
         // Perform client deletion
-        firebase.database().ref("expenses").child(id).remove();
+        firebase.database().ref("employee").child(id).remove();
       },
     };
 
@@ -212,7 +231,7 @@ class ExpensesList extends Component {
       <Fragment>
         <div className={classes.root}>
           <MUIDataTable
-            title={"Expenses list"}
+            title={"Employee list"}
             data={data.map((e) => {
               return [
                 <div
@@ -220,28 +239,42 @@ class ExpensesList extends Component {
                     fontSize: 18,
                   }}
                 >
-                  {e.description}
+                  {e.firstname}
                 </div>,
                 <div
                   style={{
                     fontSize: 18,
                   }}
                 >
-                  {numeral(e.amount).format("0,0[.]00")}
+                  {e.lastname}
                 </div>,
                 <div
                   style={{
                     fontSize: 18,
                   }}
                 >
-                  {e.expenseDate}
+                  {e.title}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.sex}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.maritalStatus}
                 </div>,
 
                 <IconButton
                   color="primary"
                   //onClick={() => this.updateFarmer(index)}
                   // The bind method also works
-                  onClick={this.updateExpense.bind(this, e.id)}
+                  onClick={this.updateEmployee.bind(this, e.id)}
                 >
                   <EditIcon color="primary" />
                 </IconButton>,
@@ -260,28 +293,23 @@ class ExpensesList extends Component {
           >
             <DialogTitle id="simple-dialog-title" color="default">
               <Typography component="h1" variant="h5" align="center">
-                Edit Expense
+                Edit Employee
               </Typography>
             </DialogTitle>
-            <DialogContent
-              style={{
-                zoom: "70%",
-              }}
-            >
+            <DialogContent>
               <DialogContentText id="alert-dialog-description" color="primary">
                 <form onSubmit={this.handleSubmit}>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item lg={6} xs={12} sm={12}>
                       <TextField
                         required
-                        id="description"
-                        name="description"
-                        value={this.state.description}
+                        id="firstname"
+                        name="firstname"
+                        value={this.state.firstname}
                         onChange={this.onChange}
-                        label="Particulars"
+                        label="Firstname"
                         fullWidth
                         margin="normal"
-                        variant="outlined"
                         autoComplete="off"
                         InputProps={{
                           classes: {
@@ -291,20 +319,16 @@ class ExpensesList extends Component {
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={12}>
-                      <NumberFormat
-                        value={this.state.amount}
-                        thousandSeparator={true}
-                        onValueChange={(values) => {
-                          const { formattedValue } = values;
-
-                          this.setState({ amount: formattedValue });
-                        }}
-                        customInput={TextField}
-                        label="Amount"
+                    <Grid item lg={6} xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="lastname"
+                        name="lastname"
+                        value={this.state.lastname}
+                        onChange={this.onChange}
+                        label="Lastname"
                         fullWidth
                         margin="normal"
-                        variant="outlined"
                         autoComplete="off"
                         InputProps={{
                           classes: {
@@ -314,28 +338,70 @@ class ExpensesList extends Component {
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={12}>
+                    <Grid item lg={6} sm={6}>
                       <TextField
-                        required
-                        id="expenseDate"
-                        name="expenseDate"
-                        value={this.state.expenseDate}
+                        id="title"
+                        select
+                        name="title"
+                        value={this.state.title}
                         onChange={this.onChange}
-                        label="Date"
-                        type="date"
+                        label="Title*"
                         fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        autoComplete="off"
+                        helperText="Please select title"
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        InputProps={{
-                          classes: {
-                            notchedOutline: classes.notchedOutline,
-                          },
+                      >
+                        {titles.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
+                    <Grid item lg={6} sm={6}>
+                      <TextField
+                        id="sex"
+                        select
+                        name="sex"
+                        value={this.state.sex}
+                        onChange={this.onChange}
+                        label="Sex*"
+                        fullWidth
+                        helperText="Please select gender"
+                        InputLabelProps={{
+                          shrink: true,
                         }}
-                      />
+                      >
+                        {genders.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
+                    <Grid item lg={6} sm={6}>
+                      <TextField
+                        id="maritalStatus"
+                        select
+                        name="maritalStatus"
+                        value={this.state.maritalStatus}
+                        onChange={this.onChange}
+                        label="Marital Status*"
+                        fullWidth
+                        helperText="Please select marital status"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      >
+                        {maritalStatuses.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     </Grid>
 
                     <Grid item xs={12} sm={12}>
@@ -347,7 +413,7 @@ class ExpensesList extends Component {
                         size="large"
                         color="primary"
                       >
-                        Update Expense
+                        Update Employee
                       </Button>
                     </Grid>
                   </Grid>

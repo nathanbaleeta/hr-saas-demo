@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import NumberFormat from "react-number-format";
+import { titles } from "../common/titleList";
+import { genders } from "../common/genderList";
+import { maritalStatuses } from "../common/maritalStatusList";
 
 import firebase from "../config/firebase";
 
-//import NumberFormat from "react-number-format";
-
-//var NumberFormat = require('react-number-format');
 const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+  },
   // Overiding css properties on material ui textbox
   notchedOutline: {
     borderWidth: "1px",
@@ -23,18 +27,15 @@ class ExpenseForm extends Component {
   constructor() {
     super();
     this.state = {
-      description: "",
-      amount: "",
-      expenseDate: "",
+      firtname: "",
+      lastname: "",
+      title: "",
+      sex: "",
+      maritalStatus: "",
     };
   }
 
   onChange = (e) => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -57,48 +58,54 @@ class ExpenseForm extends Component {
     event.preventDefault();
 
     // get our form data out of state
-    const expense = {
-      description: this.capitalize(this.state.description),
-      amount: this.removeCommas(this.state.amount),
-      expenseDate: this.state.expenseDate,
+    const employee = {
+      firstname: this.capitalize(this.state.firstname),
+      lastname: this.capitalize(this.state.lastname),
+      title: this.state.title,
+      sex: this.state.sex,
+      maritalStatus: this.state.maritalStatus,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi",
       }),
     };
 
-    console.log(expense);
+    console.log(employee);
 
-    //Save farmer module
-    const expensesRef = firebase.database().ref("expenses");
-    expensesRef.push(expense);
+    //Save Employee module
+    const employeeRef = firebase.database().ref("employee");
+    employeeRef.push(employee);
 
-    //Clear the Client form inputs
+    //Clear the Employee form inputs
     this.setState({
-      particulars: "",
-      amount: "",
-      expenseDate: "",
+      firstname: "",
+      lastname: "",
+      title: "",
+      sex: "",
+      maritalStatus: "",
     });
   };
 
   render() {
     const { classes } = this.props;
-    const { description, amount, expenseDate } = this.state;
+    const { firstname, lastname, title, sex, maritalStatus } = this.state;
 
     return (
-      <div>
+      <div className={classes.root}>
         <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
+          <Typography variant="h6" gutterBottom>
+            Autobiography
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item lg={6} xs={12} sm={12}>
               <TextField
                 required
-                id="description"
-                name="description"
-                value={description}
+                id="firstname"
+                name="firstname"
+                value={firstname}
                 onChange={this.onChange}
-                label="Particulars"
+                label="Firstname"
                 fullWidth
                 margin="normal"
-                variant="outlined"
                 autoComplete="off"
                 InputProps={{
                   classes: {
@@ -107,21 +114,16 @@ class ExpenseForm extends Component {
                 }}
               />
             </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <NumberFormat
-                value={amount}
-                thousandSeparator={true}
-                onValueChange={(values) => {
-                  const { formattedValue } = values;
-
-                  this.setState({ amount: formattedValue });
-                }}
-                customInput={TextField}
-                label="Amount"
+            <Grid item lg={6} xs={12} sm={12}>
+              <TextField
+                required
+                id="lastname"
+                name="lastname"
+                value={lastname}
+                onChange={this.onChange}
+                label="Lastname"
                 fullWidth
                 margin="normal"
-                variant="outlined"
                 autoComplete="off"
                 InputProps={{
                   classes: {
@@ -130,29 +132,68 @@ class ExpenseForm extends Component {
                 }}
               />
             </Grid>
-
-            <Grid item xs={12} sm={12}>
+            <Grid item lg={6} sm={6}>
               <TextField
-                required
-                id="expenseDate"
-                name="expenseDate"
-                value={expenseDate}
+                id="title"
+                select
+                name="title"
+                value={title}
                 onChange={this.onChange}
-                label="Date"
-                type="date"
+                label="Title*"
                 fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
+                helperText="Please select title"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                  },
+              >
+                {titles.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item lg={6} sm={6}>
+              <TextField
+                id="sex"
+                select
+                name="sex"
+                value={sex}
+                onChange={this.onChange}
+                label="Sex*"
+                fullWidth
+                helperText="Please select gender"
+                InputLabelProps={{
+                  shrink: true,
                 }}
-              />
+              >
+                {genders.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item lg={6} sm={6}>
+              <TextField
+                id="maritalStatus"
+                select
+                name="maritalStatus"
+                value={maritalStatus}
+                onChange={this.onChange}
+                label="Marital Status*"
+                fullWidth
+                helperText="Please select marital status"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              >
+                {maritalStatuses.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -160,10 +201,10 @@ class ExpenseForm extends Component {
                 type="submit"
                 fullWidth
                 variant="contained"
-                size="large"
+                size="medium"
                 color="primary"
               >
-                Save Expense
+                Save Employee
               </Button>
             </Grid>
           </Grid>
