@@ -108,7 +108,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <InsertChartIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Analytics & Reporting
           </Typography>
         </ListItem>
@@ -120,7 +120,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <StorageIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             CV Bank
           </Typography>
         </ListItem>
@@ -131,7 +131,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <GroupAddIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Recruitment
           </Typography>
         </ListItem>
@@ -143,7 +143,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <BarChartIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Appraisal
           </Typography>
         </ListItem>
@@ -154,7 +154,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Attendance
           </Typography>
         </ListItem>
@@ -165,7 +165,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Exit process
           </Typography>
         </ListItem>
@@ -177,7 +177,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <ComputerIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Learning & Training
           </Typography>
         </ListItem>
@@ -188,7 +188,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Succession Planning
           </Typography>
         </ListItem>
@@ -199,7 +199,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Corporate Social Responsibility
           </Typography>
         </ListItem>
@@ -212,7 +212,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Users
           </Typography>
         </ListItem>
@@ -222,7 +222,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Settings
           </Typography>
         </ListItem>
@@ -232,7 +232,7 @@ export default function MenuAppBar() {
           <ListItemIcon>
             <PowerSettingsNewIcon />
           </ListItemIcon>
-          <Typography variant="subtitle2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Sign out
           </Typography>
         </ListItem>
