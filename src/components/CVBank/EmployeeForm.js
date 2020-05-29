@@ -32,6 +32,7 @@ class ExpenseForm extends Component {
       lastname: "",
       title: "",
       sex: "",
+      dob: "",
       maritalStatus: "",
       phone: "",
       email: "",
@@ -66,6 +67,7 @@ class ExpenseForm extends Component {
       lastname: this.capitalize(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
+      dob: this.state.dob,
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       email: this.state.email,
@@ -86,6 +88,7 @@ class ExpenseForm extends Component {
       lastname: "",
       title: "",
       sex: "",
+      dob: "",
       maritalStatus: "",
       phone: "",
       email: "",
@@ -99,6 +102,7 @@ class ExpenseForm extends Component {
       lastname,
       title,
       sex,
+      dob,
       maritalStatus,
       phone,
       email,
@@ -189,6 +193,29 @@ class ExpenseForm extends Component {
                   </MenuItem>
                 ))}
               </TextField>
+            </Grid>
+
+            <Grid item lg={12} sm={12}>
+              <TextField
+                required
+                id="dob"
+                name="dob"
+                value={dob}
+                onChange={this.onChange}
+                label="Date"
+                type="date"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
             </Grid>
             <Grid item lg={6} sm={6}>
               <TextField

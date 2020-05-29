@@ -16,6 +16,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarEmployee";
@@ -50,6 +51,7 @@ class ExpensesList extends Component {
       lastname: "",
       title: "",
       sex: "",
+      dob: "",
       maritalStatus: "",
       phone: "",
       email: "",
@@ -77,6 +79,7 @@ class ExpensesList extends Component {
           lastname: items[item].lastname,
           title: items[item].title,
           sex: items[item].sex,
+          dob: items[item].dob,
           maritalStatus: items[item].maritalStatus,
           phone: items[item].phone,
           email: items[item].email,
@@ -127,6 +130,7 @@ class ExpensesList extends Component {
         lastname: snapshot.child("lastname").val(),
         title: snapshot.child("title").val(),
         sex: snapshot.child("sex").val(),
+        dob: snapshot.child("dob").val(),
         maritalStatus: snapshot.child("maritalStatus").val(),
         phone: snapshot.child("phone").val(),
         email: snapshot.child("email").val(),
@@ -146,6 +150,7 @@ class ExpensesList extends Component {
       lastname: this.toTitleCase(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
+      dob: this.state.dob,
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       email: this.state.email,
@@ -170,18 +175,10 @@ class ExpensesList extends Component {
 
     const columns = [
       {
-        name: "Firstname",
+        name: "Employee name",
         options: {
           filter: false,
           sort: true,
-        },
-      },
-
-      {
-        name: "Lastname",
-        options: {
-          filter: false,
-          sort: false,
         },
       },
       {
@@ -193,6 +190,13 @@ class ExpensesList extends Component {
       },
       {
         name: "Gender",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Date of birth",
         options: {
           filter: false,
           sort: false,
@@ -262,14 +266,16 @@ class ExpensesList extends Component {
                     fontSize: 18,
                   }}
                 >
-                  {e.firstname}
-                </div>,
-                <div
-                  style={{
-                    fontSize: 18,
-                  }}
-                >
-                  {e.lastname}
+                  <Link
+                    //to={`/employee/${e.id}`}
+                    style={{
+                      color: "darkblue",
+                      textDecoration: "none",
+                      fontSize: 18,
+                    }}
+                  >
+                    {e.lastname + " " + e.firstname}
+                  </Link>
                 </div>,
                 <div
                   style={{
@@ -284,6 +290,13 @@ class ExpensesList extends Component {
                   }}
                 >
                   {e.sex}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.dob}
                 </div>,
                 <div
                   style={{
@@ -417,6 +430,29 @@ class ExpensesList extends Component {
                           </MenuItem>
                         ))}
                       </TextField>
+                    </Grid>
+
+                    <Grid item lg={12} sm={12}>
+                      <TextField
+                        required
+                        id="dob"
+                        name="dob"
+                        value={this.state.dob}
+                        onChange={this.onChange}
+                        label="Date"
+                        type="date"
+                        fullWidth
+                        margin="normal"
+                        autoComplete="off"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
+                      />
                     </Grid>
 
                     <Grid item lg={6} sm={6}>
