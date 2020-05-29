@@ -52,6 +52,7 @@ class ExpensesList extends Component {
       sex: "",
       maritalStatus: "",
       phone: "",
+      email: "",
     };
   }
 
@@ -78,6 +79,7 @@ class ExpensesList extends Component {
           sex: items[item].sex,
           maritalStatus: items[item].maritalStatus,
           phone: items[item].phone,
+          email: items[item].email,
         });
       }
 
@@ -127,6 +129,7 @@ class ExpensesList extends Component {
         sex: snapshot.child("sex").val(),
         maritalStatus: snapshot.child("maritalStatus").val(),
         phone: snapshot.child("phone").val(),
+        email: snapshot.child("email").val(),
       });
     });
     console.log(
@@ -145,6 +148,7 @@ class ExpensesList extends Component {
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
+      email: this.state.email,
     };
 
     //Update expense module
@@ -203,6 +207,13 @@ class ExpensesList extends Component {
       },
       {
         name: "Phone",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Email",
         options: {
           filter: false,
           sort: false,
@@ -287,6 +298,13 @@ class ExpensesList extends Component {
                   }}
                 >
                   {e.phone}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.email}
                 </div>,
 
                 <IconButton
@@ -440,6 +458,25 @@ class ExpensesList extends Component {
                           />
                         )}
                       </InputMask>
+                    </Grid>
+
+                    <Grid item lg={6} xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="email"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.onChange}
+                        label="Email"
+                        fullWidth
+                        margin="normal"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
+                      />
                     </Grid>
 
                     <Grid item xs={12} sm={12}>
