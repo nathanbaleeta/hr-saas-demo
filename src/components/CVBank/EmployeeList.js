@@ -636,7 +636,7 @@ class ExpensesList extends Component {
                         type="submit"
                         variant="contained"
                         fullWidth
-                        size="large"
+                        size="medium"
                         color="primary"
                       >
                         Update Employee
