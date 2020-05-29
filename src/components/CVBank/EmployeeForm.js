@@ -36,6 +36,7 @@ class ExpenseForm extends Component {
       maritalStatus: "",
       phone: "",
       email: "",
+      nin: "",
     };
   }
 
@@ -71,6 +72,7 @@ class ExpenseForm extends Component {
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       email: this.state.email,
+      nin: this.state.nin,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi",
       }),
@@ -92,6 +94,7 @@ class ExpenseForm extends Component {
       maritalStatus: "",
       phone: "",
       email: "",
+      nin: "",
     });
   };
 
@@ -106,6 +109,7 @@ class ExpenseForm extends Component {
       maritalStatus,
       phone,
       email,
+      nin,
     } = this.state;
 
     return (
@@ -217,6 +221,7 @@ class ExpenseForm extends Component {
                 }}
               />
             </Grid>
+
             <Grid item lg={6} sm={6}>
               <TextField
                 id="maritalStatus"
@@ -265,6 +270,25 @@ class ExpenseForm extends Component {
                 value={email}
                 onChange={this.onChange}
                 label="Email"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item lg={6} xs={12} sm={12}>
+              <TextField
+                required
+                id="nin"
+                name="nin"
+                value={nin}
+                onChange={this.onChange}
+                label="National ID number"
                 fullWidth
                 margin="normal"
                 autoComplete="off"

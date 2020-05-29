@@ -55,6 +55,7 @@ class ExpensesList extends Component {
       maritalStatus: "",
       phone: "",
       email: "",
+      nin: "",
     };
   }
 
@@ -83,6 +84,7 @@ class ExpensesList extends Component {
           maritalStatus: items[item].maritalStatus,
           phone: items[item].phone,
           email: items[item].email,
+          nin: items[item].nin,
         });
       }
 
@@ -134,6 +136,7 @@ class ExpensesList extends Component {
         maritalStatus: snapshot.child("maritalStatus").val(),
         phone: snapshot.child("phone").val(),
         email: snapshot.child("email").val(),
+        nin: snapshot.child("nin").val(),
       });
     });
     console.log(
@@ -154,6 +157,7 @@ class ExpensesList extends Component {
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       email: this.state.email,
+      nin: this.state.nin,
     };
 
     //Update expense module
@@ -218,6 +222,13 @@ class ExpensesList extends Component {
       },
       {
         name: "Email",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "National ID number",
         options: {
           filter: false,
           sort: false,
@@ -318,6 +329,13 @@ class ExpensesList extends Component {
                   }}
                 >
                   {e.email}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.nin}
                 </div>,
 
                 <IconButton
@@ -504,6 +522,25 @@ class ExpensesList extends Component {
                         value={this.state.email}
                         onChange={this.onChange}
                         label="Email"
+                        fullWidth
+                        margin="normal"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item lg={6} xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="nin"
+                        name="nin"
+                        value={this.state.nin}
+                        onChange={this.onChange}
+                        label="National ID number"
                         fullWidth
                         margin="normal"
                         autoComplete="off"
