@@ -56,6 +56,8 @@ class ExpensesList extends Component {
       phone: "",
       email: "",
       nin: "",
+      nextOfKin: "",
+      nextOfKinPhone: "",
     };
   }
 
@@ -85,6 +87,8 @@ class ExpensesList extends Component {
           phone: items[item].phone,
           email: items[item].email,
           nin: items[item].nin,
+          nextOfKin: items[item].nextOfKin,
+          nextOfKinPhone: items[item].nextOfKinPhone,
         });
       }
 
@@ -137,6 +141,8 @@ class ExpensesList extends Component {
         phone: snapshot.child("phone").val(),
         email: snapshot.child("email").val(),
         nin: snapshot.child("nin").val(),
+        nextOfKin: snapshot.child("nextOfKin").val(),
+        nextOfKinPhone: snapshot.child("nextOfKinPhone").val(),
       });
     });
     console.log(
@@ -158,6 +164,8 @@ class ExpensesList extends Component {
       phone: this.state.phone,
       email: this.state.email,
       nin: this.state.nin,
+      nextOfKin: this.toTitleCase(this.state.nextOfKin),
+      nextOfKinPhone: this.state.nextOfKinPhone,
     };
 
     //Update expense module
@@ -229,6 +237,20 @@ class ExpensesList extends Component {
       },
       {
         name: "National ID number",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Next of kin",
+        options: {
+          filter: false,
+          sort: false,
+        },
+      },
+      {
+        name: "Next of kin phone",
         options: {
           filter: false,
           sort: false,
@@ -337,6 +359,20 @@ class ExpensesList extends Component {
                 >
                   {e.nin}
                 </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.nextOfKin}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {e.nextOfKinPhone}
+                </div>,
 
                 <IconButton
                   color="primary"
@@ -367,6 +403,9 @@ class ExpensesList extends Component {
             <DialogContent>
               <DialogContentText id="alert-dialog-description" color="primary">
                 <form onSubmit={this.handleSubmit}>
+                  <Typography variant="h6" gutterBottom>
+                    Autobiography
+                  </Typography>
                   <Grid container spacing={2}>
                     <Grid item lg={6} xs={12} sm={12}>
                       <TextField
@@ -550,6 +589,45 @@ class ExpensesList extends Component {
                           },
                         }}
                       />
+                    </Grid>
+
+                    <Grid item lg={12} sm={12}>
+                      <TextField
+                        required
+                        id="next-of-kin"
+                        name="nextOfKin"
+                        value={this.state.nextOfKin}
+                        onChange={this.onChange}
+                        label="Next of kin"
+                        fullWidth
+                        margin="normal"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item lg={6} sm={6}>
+                      <InputMask
+                        required
+                        mask="256999999999"
+                        value={this.state.nextOfKinPhone}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="next-of-kin-phone"
+                            name="nextOfKinPhone"
+                            label="Next of kin phone"
+                            fullWidth
+                            helperText="For example: 772 123 456"
+                            autoComplete="phone"
+                          />
+                        )}
+                      </InputMask>
                     </Grid>
 
                     <Grid item xs={12} sm={12}>

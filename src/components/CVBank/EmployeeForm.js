@@ -37,6 +37,8 @@ class ExpenseForm extends Component {
       phone: "",
       email: "",
       nin: "",
+      nextOfKin: "",
+      nextOfKinPhone: "",
     };
   }
 
@@ -48,6 +50,14 @@ class ExpenseForm extends Component {
     let lower = str.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
+
+  toTitleCase = (phrase) => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   // remove commas before saving to firebase
   removeCommas = (num) => {
@@ -73,6 +83,9 @@ class ExpenseForm extends Component {
       phone: this.state.phone,
       email: this.state.email,
       nin: this.state.nin,
+      nextOfKin: this.toTitleCase(this.state.nextOfKin),
+      nextOfKinPhone: this.state.nextOfKinPhone,
+
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi",
       }),
@@ -95,6 +108,8 @@ class ExpenseForm extends Component {
       phone: "",
       email: "",
       nin: "",
+      nextOfKin: "",
+      nextOfKinPhone: "",
     });
   };
 
@@ -110,12 +125,14 @@ class ExpenseForm extends Component {
       phone,
       email,
       nin,
+      nextOfKin,
+      nextOfKinPhone,
     } = this.state;
 
     return (
       <div className={classes.root}>
         <form onSubmit={this.handleSubmit}>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" color="primary" gutterBottom>
             Autobiography
           </Typography>
           <Grid container spacing={1}>
@@ -262,7 +279,7 @@ class ExpenseForm extends Component {
                 )}
               </InputMask>
             </Grid>
-            <Grid item lg={6} xs={12} sm={12}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 required
                 id="email"
@@ -298,6 +315,45 @@ class ExpenseForm extends Component {
                   },
                 }}
               />
+            </Grid>
+
+            <Grid item lg={12} sm={12}>
+              <TextField
+                required
+                id="next-of-kin"
+                name="nextOfKin"
+                value={nextOfKin}
+                onChange={this.onChange}
+                label="Next of kin"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item lg={6} sm={6}>
+              <InputMask
+                required
+                mask="256999999999"
+                value={nextOfKinPhone}
+                onChange={this.onChange}
+              >
+                {() => (
+                  <TextField
+                    id="next-of-kin-phone"
+                    name="nextOfKinPhone"
+                    label="Next of kin phone"
+                    fullWidth
+                    helperText="For example: 772 123 456"
+                    autoComplete="phone"
+                  />
+                )}
+              </InputMask>
             </Grid>
 
             <Grid item xs={12} sm={12}>
