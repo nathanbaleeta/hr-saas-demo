@@ -6,14 +6,17 @@ import Dashboard from "./components/Analytics/Dashboard";
 
 import EmployeeList from "./components/CVBank/EmployeeList";
 
+import Basic from "./components//Forms/Basic";
+import Basic2 from "./components//Forms/Basic2";
+
 function App() {
   return (
     <Fragment>
       <Header />
       <Switch>
         <Route path="/cv-bank" component={EmployeeList} />
-        <Route path="/recruitment" />
-        <Route path="/appraisal" />
+        <Route path="/recruitment" component={Basic} />
+        <Route path="/appraisal" component={Basic2} />
 
         <Route path="/attendance" />
         <Route path="/exit-process" />

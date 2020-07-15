@@ -7,6 +7,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "firebase": "^7.14.5",
+    "formik": "^2.1.4",
+    "formik-material-fields": "0.0.6",
     "mui-datatables": "^2.14.0",
     "numeral": "^2.0.6",
     "react": "^16.13.1",
@@ -15,7 +17,8 @@
     "react-input-mask": "^2.0.4",
     "react-number-format": "^4.4.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "react-scripts start",

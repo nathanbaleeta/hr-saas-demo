@@ -132,7 +132,7 @@ class ExpenseForm extends Component {
     return (
       <div className={classes.root}>
         <form onSubmit={this.handleSubmit}>
-          <Typography variant="h6" color="primary" gutterBottom>
+          <Typography variant="h6" color="default" gutterBottom>
             Autobiography
           </Typography>
           <Grid container spacing={1}>
