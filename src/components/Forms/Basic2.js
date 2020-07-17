@@ -2,7 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import TextField from "formik-material-fields/lib/TextField";
+//import TextField from "formik-material-fields/lib/TextField";
+import { TextField } from "material-ui-formik-components/TextField";
+
+import { Select } from "material-ui-formik-components/Select";
+
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -10,14 +14,9 @@ const styles = (theme) => ({
   root: {
     flexGrow: 1,
   },
-  // Overiding css properties on material ui textbox
-  notchedOutline: {
-    borderWidth: "1px",
-    borderColor: "black !important",
-  },
 });
 
-const SignupSchema = Yup.object().shape({
+const EmployeeFormSchema = Yup.object().shape({
   firstName: Yup.string()
     .required("Required")
     .min(2, "Too Short!")
@@ -27,6 +26,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required")
     .min(2, "Too Short!")
     .max(20, "Too Long!"),
+  title: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
@@ -36,9 +36,10 @@ const Basic2 = () => (
       initialValues={{
         firstName: "",
         lastName: "",
+        title: "",
         email: "",
       }}
-      validationSchema={SignupSchema}
+      validationSchema={EmployeeFormSchema}
       onSubmit={(values) => {
         // same shape as initial values
         console.log(values);
@@ -55,7 +56,7 @@ const Basic2 = () => (
               <Field
                 name="firstName"
                 component={TextField}
-                placeholder="First Name"
+                label="First Name"
                 margin="normal"
                 fullWidth
               />
@@ -65,9 +66,23 @@ const Basic2 = () => (
               <Field
                 name="lastName"
                 component={TextField}
-                placeholder="Last Name"
+                label="Last Name"
                 margin="normal"
                 fullWidth
+              />
+            </Grid>
+
+            <Grid item lg={6} xs={12} sm={12}>
+              <Field
+                required
+                name="title"
+                label="Title"
+                options={[
+                  { value: "Mr", label: "Mr" },
+                  { value: "Mrs", label: "Mrs" },
+                  { value: "Miss", label: "Miss" },
+                ]}
+                component={Select}
               />
             </Grid>
 
@@ -76,7 +91,7 @@ const Basic2 = () => (
                 name="email"
                 type="email"
                 component={TextField}
-                placeholder="Email"
+                label="Email"
                 margin="normal"
                 fullWidth
               />

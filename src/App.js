@@ -8,6 +8,7 @@ import EmployeeList from "./components/CVBank/EmployeeList";
 
 import Basic from "./components//Forms/Basic";
 import Basic2 from "./components//Forms/Basic2";
+import Form from "./components//Forms/Form";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/recruitment" component={Basic} />
         <Route path="/appraisal" component={Basic2} />
 
-        <Route path="/attendance" />
+        <Route path="/attendance" component={Form} />
         <Route path="/exit-process" />
 
         <Route path="/learning-training" />
