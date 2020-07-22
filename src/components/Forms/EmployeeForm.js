@@ -166,8 +166,78 @@ const form = (props) => {
               value={values.phone}
               onChange={handleChange}
               onBlur={handleBlur}
-              helperText={touched.phone ? errors.phone : ""}
+              helperText={
+                touched.phone ? errors.phone : "For example: 256772123456"
+              }
               error={touched.phone && Boolean(errors.phone)}
+              margin="dense"
+              variant="outlined"
+              autoComplete="off"
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item lg={6} xs={12} sm={12}>
+            <TextField
+              id="email"
+              label="Email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperText={touched.email ? errors.email : ""}
+              error={touched.email && Boolean(errors.email)}
+              margin="dense"
+              variant="outlined"
+              autoComplete="off"
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item lg={6} xs={12} sm={12}>
+            <TextField
+              id="nin"
+              label="National ID Number"
+              value={values.nin}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperText={touched.nin ? errors.nin : ""}
+              error={touched.nin && Boolean(errors.nin)}
+              margin="dense"
+              variant="outlined"
+              autoComplete="off"
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item lg={6} xs={12} sm={12}>
+            <TextField
+              id="nextOfKin"
+              label="Next of Kin"
+              value={values.nextOfKin}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperText={touched.nextOfKin ? errors.nextOfKin : ""}
+              error={touched.nextOfKin && Boolean(errors.nextOfKin)}
+              margin="dense"
+              variant="outlined"
+              autoComplete="off"
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item lg={6} xs={12} sm={12}>
+            <TextField
+              id="nextOfKinPhone"
+              label="Next of Kin Phone"
+              value={values.nextOfKinPhone}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperText={
+                touched.nextOfKinPhone
+                  ? errors.nextOfKinPhone
+                  : "For example: 256772123456"
+              }
+              error={touched.nextOfKinPhone && Boolean(errors.nextOfKinPhone)}
               margin="dense"
               variant="outlined"
               autoComplete="off"
@@ -189,6 +259,10 @@ const EmployeeForm = withFormik({
     dob,
     maritalStatus,
     phone,
+    email,
+    nin,
+    nextOfKin,
+    nextOfKinPhone,
   }) => {
     return {
       firstName: firstName || "",
@@ -198,6 +272,10 @@ const EmployeeForm = withFormik({
       dob: dob || "",
       maritalStatus: maritalStatus || "",
       phone: phone || "",
+      email: email || "",
+      nin: nin || "",
+      nextOfKin: nextOfKin || "",
+      nextOfKinPhone: nextOfKinPhone || "",
     };
   },
 
@@ -205,7 +283,7 @@ const EmployeeForm = withFormik({
     firstName: Yup.string()
       .required("Required")
       .min(2, "Too Short!")
-      .max(15, "Too Long!")
+      .max(20, "Too Long!")
       .matches(/^[A-Za-z]+$/, "Must be only text"),
     lastName: Yup.string()
       .required("Required")
@@ -222,7 +300,23 @@ const EmployeeForm = withFormik({
       .matches(/^[256][0-9]+$/, "Must possess a Ugandan country code prefix")
       .min(12, "Too Short!")
       .max(12, "Too Long!"),
-    //.matches(/^[A-Za-z]+$/, "Should have Ugandan country code prefix"),
+    email: Yup.string().required("Required").email("Invalid email address"),
+    nin: Yup.string()
+      .required("Required")
+      .matches(/^[0-9A-Z]+$/, "Invalid NIN")
+      .min(13, "Too Short!")
+      .max(14, "Too Long!"),
+    nextOfKin: Yup.string()
+      .required("Required")
+      .min(2, "Too Short!")
+      .max(40, "Too Long!")
+      .matches(/^[A-Z a-z]+$/, "Must be only text"),
+    nextOfKinPhone: Yup.string()
+      .required("Required")
+      .matches(/^[0-9]+$/, "Must only be digits")
+      .matches(/^[256][0-9]+$/, "Must possess a Ugandan country code prefix")
+      .min(12, "Too Short!")
+      .max(12, "Too Long!"),
   }),
 
   handleSubmit: (values, { setSubmitting }) => {
