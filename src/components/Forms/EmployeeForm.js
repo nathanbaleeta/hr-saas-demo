@@ -219,6 +219,7 @@ const EmployeeForm = withFormik({
     phone: Yup.string()
       .required("Required")
       .matches(/^[0-9]+$/, "Must only be digits")
+      .matches(/^[256][0-9]+$/, "Must possess a Ugandan country code prefix")
       .min(12, "Too Short!")
       .max(12, "Too Long!"),
     //.matches(/^[A-Za-z]+$/, "Should have Ugandan country code prefix"),
